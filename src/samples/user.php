@@ -57,6 +57,7 @@ if (!$aduser) {
             </div>
         <?php } ?>
         <br />
+        <br />
         <h1>Welcome to the PHP ADAL Sample App</h1>
         <br/>
         <h2>Hello, <?php echo $user['firstname'] . ' ' . $user['lastname'] ?>.</h2>

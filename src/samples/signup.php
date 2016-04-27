@@ -86,7 +86,7 @@ if (isset($_POST['email'])) {
         ?>
         <form class="form-horizontal" action="signup.php" method="post" style="margin-top: 50px">
             <fieldset>
-                <legend>Sign Up</legend>
+                <legend> <b> Sign Up </b></legend>
                 <div class="form-group">
                     <label for="firstname" class="col-lg-3 control-label">First Name</label>
                     <div class="col-lg-6">
@@ -113,7 +113,7 @@ if (isset($_POST['email'])) {
                 </div>
                 <div class="form-group">
                     <div class="col-lg-3 col-lg-offset-3">
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <button type="submit" class="btn btn-block btn-em">Sign Up</button>
                     </div>
                 </div>
             </fieldset>

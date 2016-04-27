@@ -57,91 +57,73 @@ if (isset($_GET['local'])) {
             <div class="alert alert-danger" role="alert" style="margin-top: 30px">
                 <h4><?php echo $error ?></h4>
             </div>
-            <?php }
+        <?php }
         ?>
-        <div class="starter-template">
-            <h1>Welcome to the PHP ADAL Sample App</h1>
-            <p class="lead">This app demonstrates how to use the PHP ADAL library to implement connected accounts and various authentication flows.</p>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Office 365 Accounts</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h3>Authorization Code Flow </h3>
-                        <p><a class="btn btn-primary" href="login.php?prompt=1&type=AAD" role="button">With Login prompt »</a></p>
-                        <p><a class="btn btn-primary" href="login.php" role="button">With Existing Session »</a></p>
-                    </div>
-                    <div class="col-lg-4">
-                        <h3>Hybrid Flow</h3>
-                        <p><a class="btn btn-primary" href="login.php?prompt=1&type=Hybrid" role="button">With Login prompt »</a></p>
-                        <p><a class="btn btn-primary" href="login.php?type=Hybrid" role="button">With Existing Session »</a></p>
-                    </div>
-                    <div class="col-lg-4">
-                        <h3>Resource Owner Password Credentials Grant</h3>
-                        <form class="form-horizontal" action="pwgrant.php" method="post">
-                            <fieldset>
-                                <div class="form-group">
-
-                                    <div class="col-lg-10">
+    </div>
+    <div class="row">
+        <center>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="brand">adal</p>
+                    <div id="tabs">
+                        <ul>
+                            <li><a href="#tabs-1" class="btn" >Auth Code</a></li>
+                            <li><a href="#tabs-2" class="btn">Hybrid</a></li>
+                            <li><a href="#tabs-3" class="btn">Credentials</a></li>
+                            <li><a href="#tabs-4" class="btn">Local </a></li>
+                        </ul>
+                        <div id="tabs-1">
+                            <div class="form-group">
+                                <a class="btn btn-block btn-em" href="login.php" role="button">Login</a>
+                            </div>
+                        </div>
+                        <div id="tabs-2">
+                            <div class="form-group">
+                                <a class="btn btn-block btn-em" href="login.php?type=Hybrid" role="button">Login</a>
+                            </div>
+                        </div>
+                        <div id="tabs-3">
+                            <form action="pwgrant.php" method="post">
+                                <fieldset>
+                                    <div class="form-group">
                                         <input type="text" class="form-control" id="username" name="username" placeholder="Office 365 Email">
                                     </div>
-                                </div>
-                                <div class="form-group">
-
-                                    <div class="col-lg-10">
+                                    <div class="form-group">
                                         <input type="password" class="form-control" id="password" name="password" placeholder="Office 365 Password">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-3">
-                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-em">Login</button>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Local Accounts</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <form class="form-horizontal" action="index.php?local=1" method="post">
-                            <fieldset>
-                                <legend>Log in</legend>
-                                <div class="form-group">
-                                    <label for="email" class="col-lg-3 control-label">Email</label>
-                                    <div class="col-lg-6">
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div id="tabs-4">
+                            <form action="index.php?local=1" method="post">
+                                <fieldset>
+                                    <div class="form-group">
                                         <input type="text" class="form-control" id="localemail" name="localemail" placeholder="Email">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="col-lg-3 control-label">Password</label>
-                                    <div class="col-lg-6">
+                                    <div class="form-group">
                                         <input type="password" class="form-control" id="localpassword" name="localpassword" placeholder="Password">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-3 col-lg-offset-3">
-                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-block btn-em">Login</button>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-lg-6">
-                        <legend>Sign Up</legend>
-                        <a href="signup.php" class="btn btn-primary">Sign Up</a>
+                                </fieldset>
+                            </form>
+                            <div class="row">
+                                <center> <a href="signup.php" class="help">Sign Up</a> </center>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </body>
+        </center>
+    </div>
+</body>
 </html>
+<script>
+    $(function () {
+        $("#tabs").tabs();
+    });
+</script>
