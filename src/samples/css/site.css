@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: rgb(240, 240, 240)
+    background-color: #000
 }
 
 @media(min-width:768px) {
@@ -14,12 +14,21 @@
     }
 
     .navbar-custom.top-nav-collapse {
-        padding: 5;
         border-bottom: 1px solid rgba(255,255,255,.3);
         background: #000;
     }
 }
 
+.btn-transparent{
+    background-color: transparent !important;
+    background-image: none !important;
+    text-shadow: none !important;
+}
+.btn-transparent:hover {
+    background-color: lightcoral !important;
+    background-image: none !important;
+    text-shadow: none !important;
+}
 .panel {
     display: inline-block;
     width: 500px;
@@ -56,7 +65,8 @@ footer {
     background-color: lightcoral;
     border: none;
     padding: 20px 10px 20px 10px; 
-    font-size: 1em !important;
+    font-size: 20px !important;
+    color: #fff !important;
 }
 
 .btn-em:hover,

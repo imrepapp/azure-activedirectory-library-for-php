@@ -29,12 +29,16 @@
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css"/>
     <link rel="stylesheet" type="text/css" href="./css/site.css"/>
-    <link rel="stylesheet" type="text/css" href="./css/signin.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
     <link rel="stylesheet" type="text/css" href="./css/grayscale.css"/>
     <link rel="stylesheet" type="text/css" href="./css/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="./css/google_font_montserrat.css">
     <link rel="stylesheet" type="text/css" href="./css/google_font_lora.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/home.css">
 
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+    
     <script type="text/javascript" src="./js/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="./js/jquery.validate.js"></script>
     <script type="text/javascript" src="./js/bootstrap.js"></script>
@@ -42,36 +46,34 @@
     <script type="text/javascript" src="./js/jquery-ui.js"></script>
 
     <style type="text/css">
-        body {
-            padding-top: 50px;
-        }
-        .starter-template {
-            padding: 40px 15px;
-            text-align: center;
-        }
-        .logout{
+        .nav-link{
             color: #fff;
+        }
+        .navbar a{
+            text-shadow: none !important;
+        }
+        .color-pink{
+            color: lightcoral;
         }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-custom navbar-fixed-top top-nav-collapse" role="navigation">
+<body data-spy="scroll" >
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
+
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="./index.php">php adal sample app</a>
             </div>
-            <?php if (isset($_SESSION['user_id'])) { ?>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav pull-right">
-                        <li><a href="./logout.php" class="logout">Logout</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            <?php } ?>
+            <div id="navbar">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="/#about" class="nav-link page-scroll navbar-normal">About</a></li>
+                    <li><a href="/#contact" class="nav-link page-scroll navbar-normal">Contact</a></li>
+                    <?php if (isset($_SESSION['user_id'])) { ?>
+                        <li><a href="./logout.php" class="nav-link page-scroll navbar-normal">Logout</a></li>
+                    <?php } else { ?>
+                            <li><a href="signin.php" class="nav-link color-pink page-scroll navbar-normal">Sign In</a></li>
+                    <?php } ?>
+                </ul>
+            </div>
         </div>
     </nav>

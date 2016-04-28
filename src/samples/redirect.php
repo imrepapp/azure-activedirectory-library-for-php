@@ -98,7 +98,7 @@ if ($user) {
                   'addata' => $insertAdData,
                   'tokentype' => $token_type);
     $_SESSION['data'] = json_encode($data);
-    header('Location: ./signup.php?firstname=' . $idtoken->claim('given_name') . '&lastname=' . $idtoken->claim('family_name') . '&email=' .$idtoken->claim('upn') . '&new_acc=1');
+    header('Location: ./index.php?firstname=' . $idtoken->claim('given_name') . '&lastname=' . $idtoken->claim('family_name') . '&email=' .$idtoken->claim('upn') . '&new_acc=1');
     die();
 }
 

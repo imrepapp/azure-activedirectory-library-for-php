@@ -46,6 +46,17 @@ if (!$aduser) {
 }
 ?>
 <html>
+    <style type="text/css">
+        body{
+            padding-top: 100px;
+            color: rgb(88, 88, 88) !important;
+            background-color: rgb(240, 240, 240) !important;
+        }
+        .navbar-fixed-top{
+            border-bottom: 1px solid rgba(255,255,255,.3);
+            background: #000 !important;
+        }
+    </style>
     <?php include(__DIR__ .'./header.php'); ?>
 
     <div class="container">
@@ -80,4 +91,5 @@ if (!$aduser) {
             </tbody> 
         </table>
     </div>
+    <?php include(__DIR__ . './footer.php'); ?>
 </html>
