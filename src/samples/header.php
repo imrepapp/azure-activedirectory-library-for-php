@@ -66,8 +66,8 @@
             </div>
             <div id="navbar">
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="/#about" class="nav-link page-scroll navbar-normal">About</a></li>
-                    <li><a href="/#contact" class="nav-link page-scroll navbar-normal">Contact</a></li>
+                    <li><a href="index.php#about" class="nav-link page-scroll navbar-normal">About</a></li>
+                    <li><a href="index.php#contact" class="nav-link page-scroll navbar-normal">Contact</a></li>
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <li><a href="./logout.php" class="nav-link page-scroll navbar-normal">Logout</a></li>
                     <?php } else { ?>
