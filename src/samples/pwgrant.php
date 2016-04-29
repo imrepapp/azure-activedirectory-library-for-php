@@ -50,7 +50,13 @@ if (!defined('ADALPHP_CLIENTREDIRECTURI') || empty(ADALPHP_CLIENTREDIRECTURI)) {
 $client->set_redirecturi(ADALPHP_CLIENTREDIRECTURI);
 
 // Make request.
-$returned = $client->rocredsrequest($_POST['username'], $_POST['password']);
+try {
+    $returned = $client->rocredsrequest($_POST['username'], $_POST['password']);
+}
+catch (Exception $e){
+    $_SESSION['error'] = true;
+    header('Location: ./signin.php');
+}
 
 // Process id token.
 $idtoken = \microsoft\adalphp\AAD\IDToken::instance_from_encoded($returned['id_token']);

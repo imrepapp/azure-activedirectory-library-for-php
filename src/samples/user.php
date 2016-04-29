@@ -63,7 +63,7 @@ if (!$aduser) {
         <?php
         if (isset($_GET['no_account'])) {
             ?>
-            <div class="alert alert-danger alert-dismissable" role="alert" style="margin-top: 30px">
+            <div class="alert alert-danger alert-dismissable" role="alert" style="margin-top: 30px;">
                 <h4>Unable to link the local account and the Office 365 account because their email id's do not match.</h4>
             </div>
         <?php } ?>

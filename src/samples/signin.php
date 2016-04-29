@@ -47,6 +47,12 @@ if (isset($_GET['local'])) {
         $error = 'Invalid username or password';
     }
 }
+
+if (isset($_SESSION['error'])) {
+    $error = 'Error in login with username and password.';
+    unset($_SESSION['error']);
+}
+
 ?>
 
 <html>
@@ -64,11 +70,13 @@ if (isset($_GET['local'])) {
 
     <div class="container">
         <?php if ($error != '') { ?>
-            <div class="alert alert-danger" role="alert" style="margin-top: 30px">
-                <h4><?php echo $error ?></h4>
+            <div style="position: absolute; margin-left: auto; margin-right: auto; margin-top: 100px; width: 85%;">
+                <div class="alert alert-danger" role="alert" style="position: relative; text-align: center;">
+                    <h4><?php echo $error ?></h4>
+                </div>
             </div>
-        <?php }
-        ?>
+            <?php
+        }?>
     </div>
     <center>
         <div class="panel panel-default">
@@ -121,7 +129,7 @@ if (isset($_GET['local'])) {
                             </fieldset>
                         </form>
                         <div class="row">
-                            <center> <a href="signup.php" class="help">Sign Up</a> </center>
+                            <center> <a href="index.php" class="help">Sign Up</a> </center>
                         </div>
                     </div>
                 </div>
