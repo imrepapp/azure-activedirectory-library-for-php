@@ -127,9 +127,6 @@ if (isset($_SESSION['error'])) {
                                 </div>
                             </fieldset>
                         </form>
-                        <div class="row">
-                            <center> <a href="index.php" class="help">Sign Up</a> </center>
-                        </div>
                     </div>
                 </div>
             </div>

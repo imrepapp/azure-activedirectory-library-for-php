@@ -97,7 +97,7 @@ if (isset($_POST['email'])) {
 
                         <h1 class="brand-heading"><i class="fa fa-check-square-o"></i> ADAL</h1>
                         <h2>(PHP Sample App)</h2>
-                        <p class="intro-text">The app demonstrates authentication with Microsoft Azure AD</p>
+                        <p class="intro-text">This sample app demonstrates authentication and REST API usage with Microsoft Azure AD using the Azure Active Directory Library (ADAL) for PHP.</p>
                     </div>
 
                     <div class="col-md-4 brand-title">
@@ -139,9 +139,10 @@ if (isset($_POST['email'])) {
     <section id="about" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>About PHP Adal Sample App</h2>
-                <p>PHP Adal Sample App can help you understand how to integrate your app with Azure Active Directory in a realistic way.  In the sign-up form, try typing in an email address of a user with an Azure AD account.  Then sign in as that user, and try exploring the app.</p>
-                <p>PHP Adal Sample App demonstrates authentication with Microsoft Azure AD, including industry standard protocol support for OAuth2, Web API integration with user level consent, and two factor authentication support.</p>
+                <h2>About the PHP Adal Sample App</h2>
+                <p>The PHP Adal Sample App can help you understand how to integrate your app with Azure Active Directory using PHP.</p>
+                <p>In the sign-up form, type in the email address of a user with an Azure AD account and a password. This will create a local account for that user. After signing in, you can link this local account with their Azure AD account.  Once linked in this manner, you can sign in either using the local account or
+                using the Azure AD account. For the Azure AD account, you can sign in using one of 3 standard OAuth2 flows: Authorization, Hybrid, and Resource Owner Credentials.</p>
             </div>
         </div>
     </section>
