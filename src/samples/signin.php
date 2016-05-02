@@ -34,8 +34,7 @@ require(__DIR__ . '/../../vendor/autoload.php');
 
 $db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
-// Create required tables for first run.
-$db->create_tables();
+
 $error = '';
 if (isset($_GET['local'])) {
     $user = $db->verify_user($_POST['localemail'], $_POST['localpassword']);
@@ -84,19 +83,19 @@ if (isset($_SESSION['error'])) {
                 <p class="brand">adal</p>
                 <div id="tabs">
                     <ul>
-                        <li><a href="#tabs-1" class="btn" >Auth Code</a></li>
+                        <li><a href="#tabs-1" class="btn">Auth Code</a></li>
                         <li><a href="#tabs-2" class="btn">Hybrid</a></li>
                         <li><a href="#tabs-3" class="btn">Credentials</a></li>
                         <li><a href="#tabs-4" class="btn">Local </a></li>
                     </ul>
                     <div id="tabs-1">
                         <div class="form-group">
-                            <a class="btn btn-block btn-msft" href="login.php" role="button"><img src="/img/microsoft-icon.png" class="msft-icon">Sign in with your Work or School account</a>
+                            <a class="btn btn-block btn-msft" href="login.php" role="button"><img src="./img/microsoft-icon.png" class="msft-icon">Sign in with your Work or School account</a>
                         </div>
                     </div>
                     <div id="tabs-2">
                         <div class="form-group">
-                            <a class="btn btn-block btn-msft" href="login.php?type=Hybrid" role="button"><img src="/img/microsoft-icon.png" class="msft-icon">Sign in with your Work or School account</a>
+                            <a class="btn btn-block btn-msft" href="login.php?type=Hybrid" role="button"><img src="./img/microsoft-icon.png" class="msft-icon">Sign in with your Work or School account</a>
                         </div>
                     </div>
                     <div id="tabs-3">

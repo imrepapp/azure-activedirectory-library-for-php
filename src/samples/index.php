@@ -29,6 +29,8 @@ require(__DIR__ . '/../../vendor/autoload.php');
 
 $db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
+// Create required tables for first run.
+$db->create_tables();
 $error = '';
 $email = $firstname = $lastname = $password = '';
 if (isset($_POST['email'])) {
@@ -151,7 +153,7 @@ if (isset($_POST['email'])) {
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Download PHP Adal Sample App</h2>
                     <p>You can view the source code for PHP Adal Sample App on GitHub.</p>
-                    <a href="javascript:void(0);" class="btn btn-default btn-lg btn-transparent"><i class="fa fa-github fa-fw"></i> <span class="network-name">Azure-Samples on Github</span></a>
+                    <a href="https://github.com/jamesmcq/oidc-aad-php-library/tree/master/src/samples" class="btn btn-default btn-lg btn-transparent"><i class="fa fa-github fa-fw"></i> <span class="network-name">Azure-Samples on Github</span></a>
                 </div>
             </div>
         </div>

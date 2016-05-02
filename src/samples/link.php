@@ -41,18 +41,29 @@ if (isset($_GET['link_check']) && isset($_SESSION['data'])) {
 ?>
 
 <html>
+    <style type="text/css">
+        body{
+            padding-top: 100px;
+            color: rgb(88, 88, 88) !important;
+            background-color: rgb(240, 240, 240) !important;
+        }
+        .navbar-fixed-top{
+            border-bottom: 1px solid rgba(255,255,255,.3);
+            background: #000 !important;
+        }
+    </style>
     <?php include(__DIR__ .'./header.php'); ?>
 
     <div class="container">
         <div class="starter-template">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="lead">We have found a local account with the same email id as the Office 365 account you are using to sign in.
+                    <h4 class="lead">We have found a local account with the same email id as the Office 365 account you are using to sign in.
                         Do you want to link them?
-                    </p>
+                    </h4>
                     <p>
                         <a class="btn btn-primary" href="link.php?link_check=1" role="button">Yes</a>
-                        <a class="btn btn-primary" href="index.php" role="button">No</a>
+                        <a class="btn btn-primary" href="signin.php" role="button">No</a>
                     </p>
                 </div>
             </div>

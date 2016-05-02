@@ -96,11 +96,15 @@ class sqlite {
     
     public function is_user_exist($email) {
         $email = strtolower($email);
-        $result = $this->db->query("SELECT * FROM users WHERE email = '$email'")->fetchAll();
-        if (empty($result)){
+        $user= array();
+        $result = $this->db->query("SELECT * FROM users WHERE email = '$email'");
+        if($result){
+            $user = $result->fetchAll();
+        }
+        if (empty($user)){
             return FALSE;
         }
-        return $result[0];
+        return $user[0];
     }
     
     public function get_ad_user($id) {
