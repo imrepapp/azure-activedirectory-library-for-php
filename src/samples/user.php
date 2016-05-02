@@ -64,18 +64,18 @@ if (!$aduser) {
         if (isset($_GET['no_account'])) {
             ?>
             <div class="alert alert-danger alert-dismissable" role="alert" style="margin-top: 30px;">
-                <h4>Unable to link the local account and the Office 365 account because their email id's do not match.</h4>
+                <h4>Unable to link the local account and the Azure AD account because their email id's do not match.</h4>
             </div>
         <?php } ?>
         <br />
         <br />
-        <h1>Welcome to the PHP ADAL Sample App</h1>
+        <h1>Welcome to the PHP AAD Sample App</h1>
         <br/>
         <h2>Hello, <?php echo $user['firstname'] . ' ' . $user['lastname'] ?>.</h2>
         <br/>
         <h4>Email address: <?php echo $user['email'] ?>.</h4>
         <br/>
-        <h4>Following are the connected Office 365 accounts:</h4>
+        <h4>Connected accounts:</h4>
         <table class="table">
             <thead> 
                 <tr> 
@@ -85,7 +85,7 @@ if (!$aduser) {
             </thead> 
             <tbody> 
                 <tr>  
-                    <td>Office 365</td> 
+                    <td>Azure AD</td> 
                     <td><?php echo $link; ?></td> 
                 </tr> 
             </tbody> 

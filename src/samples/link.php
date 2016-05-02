@@ -58,7 +58,7 @@ if (isset($_GET['link_check']) && isset($_SESSION['data'])) {
         <div class="starter-template">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4 class="lead">We have found a local account with the same email id as the Office 365 account you are using to sign in.
+                    <h4 class="lead">We have found a local account with the same email id as the Azure AD account you are using to sign in.
                         Do you want to link them?
                     </h4>
                     <p>

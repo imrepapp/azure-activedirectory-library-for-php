@@ -55,16 +55,6 @@ if (isset($_SESSION['error'])) {
 ?>
 
 <html>
-    <style type="text/css">
-        body{
-            color: #fff;
-            background-color: rgb(240, 240, 240) !important;
-        }
-        .navbar-fixed-top{
-            border-bottom: 1px solid rgba(255,255,255,.3);
-            background: #000 !important;
-        }
-    </style>
     <?php include(__DIR__ . './header.php'); ?>
 
     <div class="container">
@@ -80,7 +70,7 @@ if (isset($_SESSION['error'])) {
     <center>
         <div class="panel panel-default">
             <div class="panel-body">
-                <p class="brand">adal</p>
+                <p>Select authorization flow and sign in:</p>
                 <div id="tabs">
                     <ul>
                         <li><a href="#tabs-1" class="btn">Auth Code</a></li>
@@ -102,10 +92,10 @@ if (isset($_SESSION['error'])) {
                         <form action="pwgrant.php" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="Office 365 Email">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Email">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Office 365 Password">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-block btn-em">Login</button>

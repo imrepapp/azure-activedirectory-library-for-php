@@ -34,20 +34,20 @@ $client = new \microsoft\adalphp\AAD\Client($httpclient, $storage);
 
 // Set credentials.
 require(__DIR__.'/config.php');
-if (!defined('ADALPHP_CLIENTID') || empty(ADALPHP_CLIENTID)) {
+if (!defined('AADSPHP_CLIENTID') || empty(AADSPHP_CLIENTID)) {
 	throw new \Exception('No client ID set - please set in config.php');
 }
-$client->set_clientid(ADALPHP_CLIENTID);
+$client->set_clientid(AADSPHP_CLIENTID);
 
-if (!defined('ADALPHP_CLIENTSECRET') || empty(ADALPHP_CLIENTSECRET)) {
+if (!defined('AADSPHP_CLIENTSECRET') || empty(AADSPHP_CLIENTSECRET)) {
 	throw new \Exception('No client secret set - please set in config.php');
 }
-$client->set_clientsecret(ADALPHP_CLIENTSECRET);
+$client->set_clientsecret(AADSPHP_CLIENTSECRET);
 
-if (!defined('ADALPHP_CLIENTREDIRECTURI') || empty(ADALPHP_CLIENTREDIRECTURI)) {
+if (!defined('AADSPHP_CLIENTREDIRECTURI') || empty(AADSPHP_CLIENTREDIRECTURI)) {
 	throw new \Exception('No redirect URI set - please set in config.php');
 }
-$client->set_redirecturi(ADALPHP_CLIENTREDIRECTURI);
+$client->set_redirecturi(AADSPHP_CLIENTREDIRECTURI);
 
 // Make request.
 try {

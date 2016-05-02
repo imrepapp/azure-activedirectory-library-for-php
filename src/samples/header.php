@@ -62,7 +62,7 @@
         <div class="container">
 
             <div class="navbar-header">
-                <a class="navbar-brand" href="./index.php">php adal sample app</a>
+                <a class="navbar-brand" href="./index.php">PHP AAD Sample App</a>
             </div>
             <div id="navbar">
                 <ul class="nav navbar-nav pull-right">
