@@ -25,17 +25,19 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC\StorageProviders;
+namespace microsoft\aadphp\OIDC\StorageProviders;
 
 /**
  * OIDC Storage implementation using a sqlite database.
  */
-class Session implements \microsoft\adalphp\OIDC\StorageInterface {
+class Session implements \microsoft\aadphp\OIDC\StorageInterface
+{
     /**
      * Constructor.
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -49,7 +51,8 @@ class Session implements \microsoft\adalphp\OIDC\StorageInterface {
      * @param array $stateparams Additional data to be stored with the state.
      * @return bool Success/Failure
      */
-    public function store_state($state, $nonce, $stateparams) {
+    public function store_state($state, $nonce, $stateparams)
+    {
         $_SESSION[get_class($this)][$state] = [
             'nonce' => $nonce,
             'additional' => $stateparams,
@@ -61,11 +64,12 @@ class Session implements \microsoft\adalphp\OIDC\StorageInterface {
     /**
      * Get a stored state record.
      *
-     * @param string $state The state to look for,
+     * @param string $state The state to look for.
      * @return array List of additional data and the expected nonce.
      */
-    public function get_state($state) {
-        if(isset($_SESSION[get_class($this)][$state])) {
+    public function get_state($state)
+    {
+        if (isset($_SESSION[get_class($this)][$state])) {
             $result = $_SESSION[get_class($this)][$state];
 
             return [
@@ -82,10 +86,11 @@ class Session implements \microsoft\adalphp\OIDC\StorageInterface {
      *
      * @param string $nonce The nonce to look for.
      */
-    public function delete_state($nonce) {
-        if(isset($_SESSION[get_class($this)])) {
-            foreach($_SESSION[get_class($this)] as $key=>$value) {
-                if($value['nonce'] == $nonce) {
+    public function delete_state($nonce)
+    {
+        if (isset($_SESSION[get_class($this)])) {
+            foreach ($_SESSION[get_class($this)] as $key => $value) {
+                if ($value['nonce'] == $nonce) {
                     unset($_SESSION[$key]);
                     break;
                 }

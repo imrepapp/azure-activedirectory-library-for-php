@@ -38,7 +38,7 @@
 
     <link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
-    
+
     <script type="text/javascript" src="./js/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="./js/jquery.validate.js"></script>
     <script type="text/javascript" src="./js/bootstrap.js"></script>
@@ -46,34 +46,33 @@
     <script type="text/javascript" src="./js/jquery-ui.js"></script>
 
     <style type="text/css">
-        .nav-link{
+        .nav-link {
             color: #fff;
         }
-        .navbar a{
+        .navbar a {
             text-shadow: none !important;
         }
-        .color-pink{
+        .color-pink {
             color: lightcoral;
         }
     </style>
 </head>
-<body data-spy="scroll" >
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container">
-
-            <div class="navbar-header">
-                <a class="navbar-brand" href="./index.php">PHP AAD Sample App</a>
-            </div>
-            <div id="navbar">
-                <ul class="nav navbar-nav pull-right">
-                    <li><a href="./index.php#about" class="nav-link page-scroll navbar-normal">About</a></li>
-                    <li><a href="./index.php#contact" class="nav-link page-scroll navbar-normal">Contact</a></li>
-                    <?php if (isset($_SESSION['user_id'])) { ?>
-                        <li><a href="./logout.php" class="nav-link page-scroll navbar-normal">Logout</a></li>
-                    <?php } else { ?>
-                            <li><a href="signin.php" class="nav-link color-pink page-scroll navbar-normal">Sign In</a></li>
-                    <?php } ?>
-                </ul>
-            </div>
+<body data-spy="scroll">
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="./index.php">PHP AAD Sample App</a>
         </div>
-    </nav>
+        <div id="navbar">
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="./index.php#about" class="nav-link page-scroll navbar-normal">About</a></li>
+                <li><a href="./index.php#contact" class="nav-link page-scroll navbar-normal">Contact</a></li>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                    <li><a href="./logout.php" class="nav-link page-scroll navbar-normal">Logout</a></li>
+                <?php } else { ?>
+                    <li><a href="signin.php" class="nav-link color-pink page-scroll navbar-normal">Sign In</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</nav>

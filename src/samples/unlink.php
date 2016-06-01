@@ -25,11 +25,11 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 session_start();
-require(__DIR__.'/../../vendor/autoload.php');
+require(__DIR__ . '/../../vendor/autoload.php');
 
-$db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
+$db = \microsoft\aadphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
-if (isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
     $userId = $_SESSION['user_id'];
 } else {
     header('Location: ./index.php');

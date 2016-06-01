@@ -25,20 +25,22 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\tests;
+namespace microsoft\aadphp\tests;
 
 /**
  * Interface defining an HTTP client.
  *
  * @codeCoverageIgnore
  */
-class MockHttpClient implements \microsoft\adalphp\HttpClientInterface {
+class MockHttpClient implements \microsoft\aadphp\HttpClientInterface
+{
     /**
      * Set the response that will be returned.
      *
      * @param string $response The intended response.
      */
-    public function set_response($response) {
+    public function set_response($response)
+    {
         $this->response = $response;
     }
 
@@ -50,7 +52,8 @@ class MockHttpClient implements \microsoft\adalphp\HttpClientInterface {
      * @param array $options
      * @return bool
      */
-     public function post($url, $data = '', $options = array()) {
+    public function post($url, $data = '', $options = array())
+    {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new \Exception('Invalid URL in HttpClient');
         }

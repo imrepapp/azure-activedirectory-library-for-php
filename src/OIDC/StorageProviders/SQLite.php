@@ -25,23 +25,25 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC\StorageProviders;
+namespace microsoft\aadphp\OIDC\StorageProviders;
 
 /**
  * OIDC Storage implementation using a sqlite database.
  */
-class SQLite implements \microsoft\adalphp\OIDC\StorageInterface {
+class SQLite implements \microsoft\aadphp\OIDC\StorageInterface
+{
     /**
      * Constructor.
      *
      * @param string $sqlitedb The path to the sqlite database file.
      */
-    public function __construct($sqlitedb) {
+    public function __construct($sqlitedb)
+    {
         if (!file_exists($sqlitedb) || !is_readable($sqlitedb)) {
             throw new \Exception('Cannot read database.');
         }
         $this->dbfile = $sqlitedb;
-        $this->db = new \PDO('sqlite:'.$this->dbfile);
+        $this->db = new \PDO('sqlite:' . $this->dbfile);
     }
 
     /**
@@ -52,7 +54,8 @@ class SQLite implements \microsoft\adalphp\OIDC\StorageInterface {
      * @param array $stateparams Additional data to be stored with the state.
      * @return bool Success/Failure
      */
-    public function store_state($state, $nonce, $stateparams) {
+    public function store_state($state, $nonce, $stateparams)
+    {
         $sql = 'INSERT INTO state(state, nonce, additional) values (:state, :nonce, :additional)';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':state', $state, \PDO::PARAM_STR);
@@ -75,7 +78,8 @@ class SQLite implements \microsoft\adalphp\OIDC\StorageInterface {
      * @param string $state The state to look for,
      * @return array List of additional data and the expected nonce.
      */
-    public function get_state($state) {
+    public function get_state($state)
+    {
         $sql = 'SELECT * FROM state WHERE state = :state';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':state', $state, \PDO::PARAM_STR);
@@ -97,7 +101,8 @@ class SQLite implements \microsoft\adalphp\OIDC\StorageInterface {
      *
      * @param string $nonce The nonce to look for.
      */
-    public function delete_state($nonce) {
+    public function delete_state($nonce)
+    {
         $sql = 'DELETE FROM state WHERE nonce = :nonce';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nonce', $nonce, \PDO::PARAM_STR);

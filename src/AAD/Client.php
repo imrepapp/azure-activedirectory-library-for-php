@@ -25,14 +25,15 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\AAD;
+namespace microsoft\aadphp\AAD;
 
-use \microsoft\adalphp\ADALPHPException;
+use \microsoft\aadphp\AADPHPException;
 
 /**
  * Azure AD client.
  */
-class Client extends \microsoft\adalphp\OIDC\Client {
+class Client extends \microsoft\aadphp\OIDC\Client
+{
     /** @var string Auth endpoint. */
     protected $authendpoint = 'https://login.microsoftonline.com/common/oauth2/authorize';
 
@@ -44,7 +45,7 @@ class Client extends \microsoft\adalphp\OIDC\Client {
 
     /** @var string To store AAD or hybrid flow. */
     protected $authflow = 'authorization';
-    
+
     /**
      * Make a token request using the resource-owner credentials login flow.
      *
@@ -52,13 +53,14 @@ class Client extends \microsoft\adalphp\OIDC\Client {
      * @param string $password The resource owner's password.
      * @return array Received parameters.
      */
-    public function rocredsrequest($username, $password) {
+    public function rocredsrequest($username, $password)
+    {
         if (empty($this->tokenendpoint)) {
-            throw new ADALPHPException($this->lang['notokenendpoint']);
+            throw new AADPHPException($this->lang['notokenendpoint']);
         }
 
         if (strpos($this->tokenendpoint, 'https://') !== 0) {
-            throw new ADALPHPException($this->lang['insecuretokenendpoint'], $this->tokenendpoint);
+            throw new AADPHPException($this->lang['insecuretokenendpoint'], $this->tokenendpoint);
         }
 
         $params = [
@@ -79,11 +81,12 @@ class Client extends \microsoft\adalphp\OIDC\Client {
      * Construct an IDToken object from an encoded id_token string.
      *
      * @param string $idtoken An encoded id_token string.
-     * @return \microsoft\adalphp\OIDC\IDTokenInterface An IDToken object.
+     * @return \microsoft\aadphp\OIDC\IDTokenInterface An IDToken object.
      */
-    protected function constructidtoken($idtoken) {
-        $httpclient = new \microsoft\adalphp\HttpClient;
+    protected function constructidtoken($idtoken)
+    {
+        $httpclient = new \microsoft\aadphp\HttpClient;
         $keys = IDToken::get_keys($httpclient);
-        return \microsoft\adalphp\AAD\IDToken::instance_from_encoded($idtoken, $keys);
+        return \microsoft\aadphp\AAD\IDToken::instance_from_encoded($idtoken, $keys);
     }
 }

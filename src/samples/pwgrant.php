@@ -25,47 +25,46 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 session_start();
-require(__DIR__.'/../../vendor/autoload.php');
+require(__DIR__ . '/../../vendor/autoload.php');
 
 // Construct.
-$httpclient = new \microsoft\adalphp\HttpClient;
-$storage = new \microsoft\adalphp\OIDC\StorageProviders\SQLite(__DIR__.'/storagedb.sqlite');
-$client = new \microsoft\adalphp\AAD\Client($httpclient, $storage);
+$httpclient = new \microsoft\aadphp\HttpClient;
+$storage = new \microsoft\aadphp\OIDC\StorageProviders\SQLite(__DIR__ . '/storagedb.sqlite');
+$client = new \microsoft\aadphp\AAD\Client($httpclient, $storage);
 
 // Set credentials.
-require(__DIR__.'/config.php');
+require(__DIR__ . '/config.php');
 if (!defined('AADSPHP_CLIENTID') || empty(AADSPHP_CLIENTID)) {
-	throw new \Exception('No client ID set - please set in config.php');
+    throw new \Exception('No client ID set - please set in config.php');
 }
 $client->set_clientid(AADSPHP_CLIENTID);
 
 if (!defined('AADSPHP_CLIENTSECRET') || empty(AADSPHP_CLIENTSECRET)) {
-	throw new \Exception('No client secret set - please set in config.php');
+    throw new \Exception('No client secret set - please set in config.php');
 }
 $client->set_clientsecret(AADSPHP_CLIENTSECRET);
 
 if (!defined('AADSPHP_CLIENTREDIRECTURI') || empty(AADSPHP_CLIENTREDIRECTURI)) {
-	throw new \Exception('No redirect URI set - please set in config.php');
+    throw new \Exception('No redirect URI set - please set in config.php');
 }
 $client->set_redirecturi(AADSPHP_CLIENTREDIRECTURI);
 
 // Make request.
 try {
     $returned = $client->rocredsrequest($_POST['username'], $_POST['password']);
-}
-catch (Exception $e){
+} catch (Exception $e) {
     $_SESSION['error'] = true;
     header('Location: ./signin.php');
 }
 
 // Process id token.
-$idtoken = \microsoft\adalphp\AAD\IDToken::instance_from_encoded($returned['id_token']);
+$idtoken = \microsoft\aadphp\AAD\IDToken::instance_from_encoded($returned['id_token']);
 
-$db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
+$db = \microsoft\aadphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
 if (isset($_SESSION['user_id'])) {
     $user = $db->get_user($_SESSION['user_id']);
-    
+
     if ($user['email'] != strtolower($idtoken->claim('upn'))) {
         header('Location: ./user.php?no_account=1');
         die();
@@ -76,26 +75,36 @@ $user = $db->is_user_exist($idtoken->claim('upn'));
 
 if ($user) {
     $adUser = $db->get_ad_user($user['id']);
-    if (isset($_SESSION['user_id']) && !$adUser) {
-        
-        $db->insert_ad_user($returned['id_token'], $user['id'], $idtoken->claim('upn'), 'id_token');
-        
-    } else if (!$adUser) {
-        $data = array('userid' => $user['id'],
-                      'emailid' => $idtoken->claim('upn'),
-                      'addata' => $returned['id_token'],
-                      'tokentype' => 'id_token');
-        $_SESSION['data'] = json_encode($data);
-        header('Location: ./link.php');
-        die();
-     }
+    if ($adUser) {
+        // Update access token in db, each time user logs in.
+        $db->update_ad_user($returned,$user['id']);
+    } else {
+        // User account present in local database but not linked yet
+        if (isset($_SESSION['user_id'])) {
+            // User locally signed in, directly link local account with active directory account.
+            $db->insert_ad_user($returned['id_token'], $user['id'], $idtoken->claim('upn'), 'id_token');
+        } else {
+            // User account present in local database, ask user whether to link with active directory account.
+            $data = array(
+                'userid' => $user['id'],
+                'emailid' => $idtoken->claim('upn'),
+                'addata' => $returned['id_token'],
+                'tokentype' => 'id_token'
+            );
+            $_SESSION['data'] = json_encode($data);
+            header('Location: ./link.php');
+            die();
+        }
+    }
 } else {
-    $data = array('userid' => $user['id'],
-                  'emailid' => $idtoken->claim('upn'),
-                  'addata' => $returned['id_token'],
-                  'tokentype' => 'id_token');
+    $data = array(
+        'userid' => $user['id'],
+        'emailid' => $idtoken->claim('upn'),
+        'addata' => $returned['id_token'],
+        'tokentype' => 'id_token'
+    );
     $_SESSION['data'] = json_encode($data);
-    header('Location: ./index.php?firstname=' . $idtoken->claim('given_name') . '&lastname=' . $idtoken->claim('family_name') . '&email=' .$idtoken->claim('upn') . '&new_acc=1');
+    header('Location: ./index.php?firstname=' . $idtoken->claim('given_name') . '&lastname=' . $idtoken->claim('family_name') . '&email=' . $idtoken->claim('upn') . '&new_acc=1');
     die();
 }
 

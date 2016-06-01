@@ -25,33 +25,36 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\tests;
+namespace microsoft\aadphp\tests;
 
 /**
  * Tests AAD Client.
  *
- * @group adalphp
+ * @group aadphp
  * @codeCoverageIgnore
  */
-class AADClientTest extends \PHPUnit_Framework_TestCase {
+class AADClientTest extends \PHPUnit_Framework_TestCase
+{
 
     /*
      * Setup required classes.
      */
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
-        
-        $this->httpclient = new \microsoft\adalphp\tests\MockHttpClient();
-        $this->storage = new \microsoft\adalphp\tests\MockStorage();
-        $this->client = new \microsoft\adalphp\AAD\Client($this->httpclient, $this->storage);
+
+        $this->httpclient = new \microsoft\aadphp\tests\MockHttpClient();
+        $this->storage = new \microsoft\aadphp\tests\MockStorage();
+        $this->client = new \microsoft\aadphp\AAD\Client($this->httpclient, $this->storage);
     }
-    
+
     /**
      * Dataprovider returning token parameters.
      *
      * @return array Array of arrays of token parameters.
      */
-    public function dataprovider_token() {
+    public function dataprovider_token()
+    {
         $access_token = array(
             'access_token' => 'foobar',
             'token_type' => 'bearer',
@@ -79,9 +82,9 @@ class AADClientTest extends \PHPUnit_Framework_TestCase {
             'resource' => 'https://graph.windows.net',
             'scope' => 'User.Read'
         );
-        
+
         $id_token = $access_token['id_token'];
-        
+
         $id_token_claims = array(
             'oid' => '7f8e1969-8b81-438c-8d4e-ad6f562b28bb',
             'upn' => 'foobar@test.onmicrosoft.com',
@@ -92,30 +95,33 @@ class AADClientTest extends \PHPUnit_Framework_TestCase {
         );
 
         $tokens['data'] = [
-            [   'access_token' => $access_token,
+            [
+                'access_token' => $access_token,
                 'id_token' => $id_token,
-                'id_token_claims' => $id_token_claims]
+                'id_token_claims' => $id_token_claims
+            ]
         ];
-        
+
         return $tokens;
     }
-    
+
     /**
      * Test resource owner credentials flow.
      * @dataProvider dataprovider_token
      */
-    public function test_rocred_flow($token) {
-     
+    public function test_rocred_flow($token)
+    {
+
         $this->httpclient->set_response(json_encode($token['access_token'], true));
-        
+
         $this->client->set_tokenendpoint('https://test.onmicrosoft.com');
-        
+
         $returned = $this->client->rocredsrequest('o365_email', 'o365_password');
-        
+
         // Test access token.
         $this->assertEquals($returned, $token['access_token']);
-        
-        $id_token = \microsoft\adalphp\AAD\IDToken::instance_from_encoded($returned['id_token']);
+
+        $id_token = \microsoft\aadphp\AAD\IDToken::instance_from_encoded($returned['id_token']);
 
         $id_token_claims = $token['id_token_claims'];
 

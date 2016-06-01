@@ -25,20 +25,22 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\AAD;
+namespace microsoft\aadphp\AAD;
 
-use microsoft\adalphp\ADALPHPException;
+use microsoft\aadphp\AADPHPException;
 
 /**
  * Azure AD specific IDToken implementation.
  */
-class IDToken extends \microsoft\adalphp\OIDC\IDToken {
+class IDToken extends \microsoft\aadphp\OIDC\IDToken
+{
     /**
      * Get a sensible username for the user represented by the idtoken.
      *
      * @return string A username for the user.
      */
-    public function get_username() {
+    public function get_username()
+    {
         $upn = $this->claim('upn');
         return (!empty($upn)) ? $upn : parent::get_username();
     }
@@ -48,7 +50,8 @@ class IDToken extends \microsoft\adalphp\OIDC\IDToken {
      *
      * @return string A unique identifier.
      */
-    public function get_uniqid() {
+    public function get_uniqid()
+    {
         $oid = $this->claim('oid');
         return (!empty($oid)) ? $oid : parent::get_uniqid();
     }
@@ -57,16 +60,17 @@ class IDToken extends \microsoft\adalphp\OIDC\IDToken {
      * Get current AAD signing keys.
      *
      * @param string $tenantid The tenant ID.
-     * @param \microsoft\adalphp\HttpClientInterface $httpclient HTTP Client instance.
+     * @param \microsoft\aadphp\HttpClientInterface $httpclient HTTP Client instance.
      * @return array Array of keys.
      */
-    public static function get_keys(\microsoft\adalphp\HttpClientInterface $httpclient, $tenantid = null) {
+    public static function get_keys(\microsoft\aadphp\HttpClientInterface $httpclient, $tenantid = null)
+    {
         if (!empty($tenantid)) {
-            $url = 'https://login.windows.net/'.$tenantid.'/.well-known/openid-configuration';
+            $url = 'https://login.windows.net/' . $tenantid . '/.well-known/openid-configuration';
             $oidcconfig = $httpclient->get($url);
             $oidcconfig = @json_decode($oidcconfig, true);
             if (empty($oidcconfig) || !is_array($oidcconfig) || !isset($oidcconfig['jwks_uri'])) {
-                throw new ADALPHPException('Could not get openid connect config (1).');
+                throw new AADPHPException('Could not get openid connect config (1).');
             }
             $jwks_uri = $oidcconfig['jwks_uri'];
         } else {
@@ -76,7 +80,7 @@ class IDToken extends \microsoft\adalphp\OIDC\IDToken {
         $keydata = $httpclient->get($jwks_uri);
         $keydata = @json_decode($keydata, true);
         if (empty($keydata) || !is_array($keydata) || !isset($keydata['keys'])) {
-            throw new ADALPHPException('Could not get openid connect config (2).');
+            throw new AADPHPException('Could not get openid connect config (2).');
         }
 
         $keys = [];
@@ -96,7 +100,8 @@ class IDToken extends \microsoft\adalphp\OIDC\IDToken {
      * @param string $key Encoded key.
      * @return string OpenSSL-compatible key.
      */
-    public static function transform_key($key) {
+    public static function transform_key($key)
+    {
         $output = "-----BEGIN CERTIFICATE-----\n";
         $output .= wordwrap($key, 64, "\n", true);
         $output .= "\n-----END CERTIFICATE-----";

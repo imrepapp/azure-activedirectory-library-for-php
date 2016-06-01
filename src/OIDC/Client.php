@@ -25,19 +25,20 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC;
+namespace microsoft\aadphp\OIDC;
 
-use \microsoft\adalphp\HttpClientInterface;
-use \microsoft\adalphp\ADALPHPException;
+use \microsoft\aadphp\HttpClientInterface;
+use \microsoft\aadphp\AADPHPException;
 
 /**
  * OpenID Connect Client.
  */
-class Client implements \microsoft\adalphp\OIDC\ClientInterface {
-    /** @var \microsoft\adalphp\HttpClientInterface An HTTP client to use. */
+class Client implements \microsoft\aadphp\OIDC\ClientInterface
+{
+    /** @var \microsoft\aadphp\HttpClientInterface An HTTP client to use. */
     protected $httpclient;
 
-    /** @var \microsoft\adalphp\OIDC\StorageInterface A storage implementation to use. */
+    /** @var \microsoft\aadphp\OIDC\StorageInterface A storage implementation to use. */
     protected $storage;
 
     /** @var string The client ID. */
@@ -57,13 +58,13 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
 
     /** @var string Token endpoint. */
     protected $tokenendpoint = '';
-    
+
     /** @var string To store AAD or hybrid flow. */
     protected $authflow = '';
-    
+
     /** @var array of supported auth flows. */
     protected $supportedauthflows = array("authorization", "hybrid", "rocred");
-    
+
     /** @var array Array of language strings. */
     protected $lang = [
         'invalidendpoint' => 'Invalid Endpoint URI received.',
@@ -88,10 +89,11 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
     /**
      * Constructor.
      *
-     * @param \microsoft\adalphp\HttpClientInterface $httpclient An HTTP client to use for background communication.
-     * @param \microsoft\adalphp\OIDC\StorageInterface $storage A storage implementation to use.
+     * @param \microsoft\aadphp\HttpClientInterface $httpclient An HTTP client to use for background communication.
+     * @param \microsoft\aadphp\OIDC\StorageInterface $storage A storage implementation to use.
      */
-    public function __construct(HttpClientInterface $httpclient, StorageInterface $storage) {
+    public function __construct(HttpClientInterface $httpclient, StorageInterface $storage)
+    {
         $this->httpclient = $httpclient;
         $this->storage = $storage;
     }
@@ -101,9 +103,10 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $uri Authorization endpoint.
      */
-    public function set_authendpoint($uri) {
+    public function set_authendpoint($uri)
+    {
         if (filter_var($uri, FILTER_VALIDATE_URL) === false) {
-            throw new ADALPHPException($this->lang['invalidendpoint'], $uri);
+            throw new AADPHPException($this->lang['invalidendpoint'], $uri);
         }
         $this->authendpoint = $uri;
     }
@@ -113,9 +116,10 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $uri Token endpoint.
      */
-    public function set_tokenendpoint($uri) {
+    public function set_tokenendpoint($uri)
+    {
         if (filter_var($uri, FILTER_VALIDATE_URL) === false) {
-            throw new ADALPHPException($this->lang['invalidendpoint'], $uri);
+            throw new AADPHPException($this->lang['invalidendpoint'], $uri);
         }
         $this->tokenendpoint = $uri;
     }
@@ -125,7 +129,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param array $lang Array of language strings, using same keys as property $lang.
      */
-    public function set_lang(array $lang) {
+    public function set_lang(array $lang)
+    {
         foreach ($lang as $k => $v) {
             if (isset($this->lang[$k])) {
                 $this->lang[$k] = $v;
@@ -138,7 +143,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $clientid The client ID to set.
      */
-    public function set_clientid($clientid) {
+    public function set_clientid($clientid)
+    {
         $this->clientid = $clientid;
     }
 
@@ -147,7 +153,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $clientsecret The client secret to set.
      */
-    public function set_clientsecret($clientsecret) {
+    public function set_clientsecret($clientsecret)
+    {
         $this->clientsecret = $clientsecret;
     }
 
@@ -156,7 +163,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $redirecturi The redirect URI to set.
      */
-    public function set_redirecturi($redirecturi) {
+    public function set_redirecturi($redirecturi)
+    {
         $this->redirecturi = $redirecturi;
     }
 
@@ -165,40 +173,44 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $resource The redirect URI to set.
      */
-    public function set_resource($resource) {
-            $this->resource = $resource;
-        }
+    public function set_resource($resource)
+    {
+        $this->resource = $resource;
+    }
 
     /**
      * Set the authflow.
      *
      * @param string $authflow The authflow to set.
      */
-    public function set_authflow($authflow) {
-        
+    public function set_authflow($authflow)
+    {
+
         if (in_array($authflow, $this->supportedauthflows)) {
             $this->authflow = $authflow;
         } else {
-            throw new ADALPHPException('Invalid authflow.');
+            throw new AADPHPException('Invalid authflow.');
         }
-        
+
     }
-    
+
     /**
      * Get the authflow.
      *
      * @return string $authflow The authflow to get.
      */
-    public function get_authflow() {
+    public function get_authflow()
+    {
         return $this->authflow;
     }
-    
+
     /**
      * Get the set client ID.
      *
      * @return string The set client ID.
      */
-    public function get_clientid() {
+    public function get_clientid()
+    {
         return (isset($this->clientid)) ? $this->clientid : null;
     }
 
@@ -207,7 +219,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @return string The set client secret.
      */
-    public function get_clientsecret() {
+    public function get_clientsecret()
+    {
         return (isset($this->clientsecret)) ? $this->clientsecret : null;
     }
 
@@ -216,7 +229,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @return string The set redirect URI.
      */
-    public function get_redirecturi() {
+    public function get_redirecturi()
+    {
         return (isset($this->redirecturi)) ? $this->redirecturi : null;
     }
 
@@ -225,7 +239,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @return string The set resource.
      */
-    public function get_resource() {
+    public function get_resource()
+    {
         return (isset($this->resource)) ? $this->resource : null;
     }
 
@@ -234,7 +249,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @return string The set endpoint URL.
      */
-    public function get_authendpoint() {
+    public function get_authendpoint()
+    {
         return $this->authendpoint;
     }
 
@@ -243,7 +259,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @return string The set endpoint URL.
      */
-    public function get_tokenendpoint() {
+    public function get_tokenendpoint()
+    {
         return $this->tokenendpoint;
     }
 
@@ -254,7 +271,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param array $extraparams Additional parameters to send with the OIDC request.
      * @return array Array of request parameters.
      */
-    protected function getauthrequestparams(array $stateparams = array(), array $extraparams = array()) {
+    protected function getauthrequestparams(array $stateparams = array(), array $extraparams = array())
+    {
         $nonce = str_replace('.', '', uniqid('', true));
         $nonce .= $this->get_random_string(41);
 
@@ -268,11 +286,11 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
             'nonce' => $nonce,
             'resource' => $this->resource,
         ];
-        
+
         if ($this->authflow == 'hybrid') {
             $params['response_type'] = 'code id_token';
         }
-        
+
         $params = array_merge($params, $extraparams);
         return $params;
     }
@@ -283,7 +301,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param int $length The length to generate.
      * @return string The random string.
      */
-    protected function get_random_string($length) {
+    protected function get_random_string($length)
+    {
         $output = '';
         $chrs = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $numc = strlen($chrs) - 1;
@@ -300,7 +319,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param array $stateparams Additional data to be stored with the state.
      * @return string The new state value.
      */
-    protected function getnewstate($nonce, array $stateparams = array()) {
+    protected function getnewstate($nonce, array $stateparams = array())
+    {
         $state = $this->get_random_string(15);
         $this->storage->store_state($state, $nonce, $stateparams);
         return $state;
@@ -313,17 +333,18 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param array $stateparams Parameters to store as state.
      * @param array $extraparams Additional parameters to send with the OIDC request.
      */
-    public function authrequest($promptlogin = false, array $stateparams = array(), array $extraparams = array()) {
+    public function authrequest($promptlogin = false, array $stateparams = array(), array $extraparams = array())
+    {
         if (empty($this->clientid)) {
-            throw new ADALPHPException($this->lang['nocreds']);
+            throw new AADPHPException($this->lang['nocreds']);
         }
 
         if (empty($this->authendpoint)) {
-            throw new ADALPHPException($this->lang['noauthendpoint']);
+            throw new AADPHPException($this->lang['noauthendpoint']);
         }
 
         if (strpos($this->authendpoint, 'https://') !== 0) {
-            throw new ADALPHPException($this->lang['insecureauthendpoint'], $this->authendpoint);
+            throw new AADPHPException($this->lang['insecureauthendpoint'], $this->authendpoint);
         }
 
         if ($promptlogin === true) {
@@ -332,8 +353,8 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
         $params = $this->getauthrequestparams($stateparams, $extraparams);
         $params = http_build_query($params, '', '&');
         $url = $this->authendpoint;
-        $url = (strpos($url, '?') !== false) ? $url.'&'.$params : $url.'?'.$params;
-        header('Location: '.$url);
+        $url = (strpos($url, '?') !== false) ? $url . '&' . $params : $url . '?' . $params;
+        header('Location: ' . $url);
         die();
     }
 
@@ -343,13 +364,14 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param array $authparams Array of received auth response parameters.
      * @return array List of IDToken object, array of token parameters, and stored state parameters.
      */
-    public function handle_auth_response(array $authparams) {
+    public function handle_auth_response(array $authparams)
+    {
         // Validate response.
         if (!isset($authparams['code'])) {
-            throw new ADALPHPException($this->lang['noauthcode'], $authparams);
+            throw new AADPHPException($this->lang['noauthcode'], $authparams);
         }
         if (!isset($authparams['state'])) {
-            throw new ADALPHPException($this->lang['unknownstate'], $authparams);
+            throw new AADPHPException($this->lang['unknownstate'], $authparams);
         }
 
         // Look up state.
@@ -363,7 +385,7 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
 
         // Process id_token.
         if (!isset($tokenparams['id_token'])) {
-            throw new ADALPHPException($this->lang['noidtoken'], $tokenparams);
+            throw new AADPHPException($this->lang['noidtoken'], $tokenparams);
         }
 
         $idtoken = $this->process_idtoken($tokenparams['id_token'], $nonce);
@@ -376,22 +398,23 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      *
      * @param string $idtoken Encoded id token.
      * @param string $expectednonce Expected nonce to validate received nonce against.
-     * @return \microsoft\adalphp\OIDC\IDTokenInterface An IDToken object.
+     * @return \microsoft\aadphp\OIDC\IDTokenInterface An IDToken object.
      */
-    public function process_idtoken($idtoken, $expectednonce = '') {
+    public function process_idtoken($idtoken, $expectednonce = '')
+    {
         // Decode id_token.
         try {
             $idtoken = $this->constructidtoken($idtoken);
         } catch (\Exception $e) {
-            $errmsg = $this->lang['invalididtoken'].': '.$e->getMessage();
-            throw new ADALPHPException($errmsg, $idtoken);
+            $errmsg = $this->lang['invalididtoken'] . ': ' . $e->getMessage();
+            throw new AADPHPException($errmsg, $idtoken);
         }
 
         // Validate id_token nonce.
         $receivednonce = $idtoken->get_nonce();
         if (!empty($expectednonce) && (empty($receivednonce) || $receivednonce !== $expectednonce)) {
             $debugparams = ['idtoken' => $idtoken, 'expectednonce' => $expectednonce];
-            throw new ADALPHPException($this->lang['invalididtoken_nonce'], $debugparams);
+            throw new AADPHPException($this->lang['invalididtoken_nonce'], $debugparams);
         }
 
         // Validate audience.
@@ -405,11 +428,11 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
             }
             if ($found !== true) {
                 $debugparams = ['clientid' => $this->clientid, 'aud' => $aud];
-                throw new ADALPHPException($this->lang['invalididtoken_aud'], $debugparams);
+                throw new AADPHPException($this->lang['invalididtoken_aud'], $debugparams);
             }
         } elseif (!is_string($aud) || $aud !== $this->clientid) {
             $debugparams = ['clientid' => $this->clientid, 'aud' => $aud];
-            throw new ADALPHPException($this->lang['invalididtoken_aud'], $debugparams);
+            throw new AADPHPException($this->lang['invalididtoken_aud'], $debugparams);
         }
 
         // Validate expiration.
@@ -417,7 +440,7 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
         $now = time();
         if ($exp <= $now) {
             $debugparams = ['exp' => $exp, 'now' => $now];
-            throw new ADALPHPException($this->lang['invalididtoken_exp'], $debugparams);
+            throw new AADPHPException($this->lang['invalididtoken_exp'], $debugparams);
         }
 
         return $idtoken;
@@ -427,9 +450,10 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * Construct an IDToken object from an encoded id_token string.
      *
      * @param string $idtoken An encoded id_token string.
-     * @return \microsoft\adalphp\OIDC\IDTokenInterface An IDToken object.
+     * @return \microsoft\aadphp\OIDC\IDTokenInterface An IDToken object.
      */
-    protected function constructidtoken($idtoken) {
+    protected function constructidtoken($idtoken)
+    {
         return IDToken::instance_from_encoded($idtoken, $key);
     }
 
@@ -441,18 +465,19 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param array $expectedstructure Array defining the expected parameters of the response.
      * @return array Decoded and validated response.
      */
-    protected function process_json_response($response, array $expectedstructure = array()) {
+    protected function process_json_response($response, array $expectedstructure = array())
+    {
         $result = @json_decode($response, true);
         if (empty($result) || !is_array($result)) {
-            throw new ADALPHPException($this->lang['invalidresponse'], $response);
+            throw new AADPHPException($this->lang['invalidresponse'], $response);
         }
 
         if (isset($result['error'])) {
             $errormsg = $this->lang['errorresponse'];
             if (isset($result['error_description'])) {
-                $errormsg .= ': '.$result['error_description'];
+                $errormsg .= ': ' . $result['error_description'];
             }
-            throw new ADALPHPException($errormsg, $response);
+            throw new AADPHPException($errormsg, $response);
         }
 
         if (!empty($expectedstructure)) {
@@ -461,7 +486,7 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
                 if (!isset($result[$key])) {
                     $debugparams['missingkey'] = $key;
                     $errormsg = $this->lang['invalidresponse_keymissing'];
-                    throw new ADALPHPException($errormsg, $debugparams);
+                    throw new AADPHPException($errormsg, $debugparams);
                 }
 
                 if ($val !== null && $result[$key] !== $val) {
@@ -471,7 +496,7 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
                         'expected' => $this->tostring($val),
                     ];
                     $errormsg = $this->lang['invalidresponse_badvalue'];
-                    throw new ADALPHPException($errormsg, $debugparams);
+                    throw new AADPHPException($errormsg, $debugparams);
                 }
             }
         }
@@ -485,12 +510,13 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param mixed $val The variable to convert.
      * @return string A string representation.
      */
-    protected function tostring($val) {
+    protected function tostring($val)
+    {
         if (is_scalar($val)) {
             if (is_bool($val)) {
-                return '(bool)'.(string)(int)$val;
+                return '(bool)' . (string)(int)$val;
             } else {
-                return '('.gettype($val).')'.(string)$val;
+                return '(' . gettype($val) . ')' . (string)$val;
             }
         } else if (is_null($val)) {
             return '(null)';
@@ -505,13 +531,14 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
      * @param string $code An authorization code.
      * @return array Received parameters.
      */
-    public function tokenrequest($code) {
+    public function tokenrequest($code)
+    {
         if (empty($this->tokenendpoint)) {
-            throw new ADALPHPException($this->lang['notokenendpoint']);
+            throw new AADPHPException($this->lang['notokenendpoint']);
         }
 
         if (strpos($this->tokenendpoint, 'https://') !== 0) {
-            throw new ADALPHPException($this->lang['insecuretokenendpoint'], $this->tokenendpoint);
+            throw new AADPHPException($this->lang['insecuretokenendpoint'], $this->tokenendpoint);
         }
 
         $params = [
@@ -525,17 +552,18 @@ class Client implements \microsoft\adalphp\OIDC\ClientInterface {
         $returned = $this->httpclient->post($this->tokenendpoint, $params);
         return $this->process_json_response($returned, ['id_token' => null]);
     }
-    
+
     /**
      * Handle auth response.
      *
      * @param array $authparams Array of received auth response parameters.
-     * @return array List of IDToken object, array of token parameters, and stored state parameters.
+     * @return array List of IDToken object and stored state parameters.
      */
-    public function handle_id_token(array $authparams) {
+    public function handle_id_token(array $authparams)
+    {
         // Validate response.
         if (!isset($authparams['state'])) {
-            throw new ADALPHPException($this->lang['unknownstate'], $authparams);
+            throw new AADPHPException($this->lang['unknownstate'], $authparams);
         }
 
         // Look up state.

@@ -1,6 +1,6 @@
 {
-    "name": "microsoft/adalphp",
-    "description": "Microsoft Azure Active Directory Authentication Library (ADAL) for PHP",
+    "name": "microsoft/aadphp",
+    "description": "Microsoft Azure Active Directory Authentication Library (AAD) for PHP",
     "license": "MIT",
     "keywords": [
         "openidconnect",
@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "microsoft\\adalphp\\": "src/"
+            "microsoft\\aadphp\\": "src/"
         }
     }
 }

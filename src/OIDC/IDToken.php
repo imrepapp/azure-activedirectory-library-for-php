@@ -25,18 +25,20 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC;
+namespace microsoft\aadphp\OIDC;
 
 /**
  * IDToken implementation based on JWT.
  */
-class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\IDTokenInterface {
+class IDToken extends \microsoft\aadphp\JWT implements \microsoft\aadphp\OIDC\IDTokenInterface
+{
     /**
      * Get a sensible username for the user represented by the idtoken.
      *
      * @return string A username for the user.
      */
-    public function get_username() {
+    public function get_username()
+    {
         return $this->get_uniqid();
     }
 
@@ -45,7 +47,8 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @return string A unique identifier.
      */
-    public function get_uniqid() {
+    public function get_uniqid()
+    {
         return $this->claim('sub');
     }
 
@@ -54,7 +57,8 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @return string A nonce.
      */
-    public function get_nonce() {
+    public function get_nonce()
+    {
         return $this->claim('nonce');
     }
 
@@ -63,7 +67,8 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @return string|array The intended audience.
      */
-    public function get_audience() {
+    public function get_audience()
+    {
         return $this->claim('aud');
     }
 
@@ -72,7 +77,8 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @return int The expiration time.
      */
-    public function get_expiration() {
+    public function get_expiration()
+    {
         return (int)$this->claim('exp');
     }
 
@@ -81,7 +87,8 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @return array Array of available user information.
      */
-    public function get_userinfo() {
+    public function get_userinfo()
+    {
         $userinfo = [];
 
         $firstname = $this->claim('given_name');
@@ -106,9 +113,10 @@ class IDToken extends \microsoft\adalphp\JWT implements \microsoft\adalphp\OIDC\
      *
      * @param string $encoded The encoded JWT.
      * @param array $keys Array of keys to verify JWT. At least one key must verify.
-     * @return \microsoft\adalphp\JWT A JWT instance.
+     * @return \microsoft\aadphp\JWT A JWT instance.
      */
-    public static function instance_from_encoded($encoded, array $keys = array()) {
+    public static function instance_from_encoded($encoded, array $keys = array())
+    {
         list($header, $body) = static::decode($encoded, $keys);
         $idtoken = new static;
         $idtoken->set_header($header);
