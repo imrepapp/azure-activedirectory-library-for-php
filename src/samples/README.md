@@ -19,3 +19,23 @@ This sample app demonstrates how to use the Azure Active Directory via PHP to im
   2. Hybrid code flow: This is the quicker ID Token OAuth2 flow. This will redirect you to the Azure AD login page if you haven't already logged in to Azure AD and take you through the login process.
   3. Resource Owner Password Credentials Grant: This allows you to enter Azure AD login credentials directly in the login form and have authentication happen behind the scenes. You will not be redirected to Azure AD to log in.
   4. Local account: You can log in to your local account using the user ID and password you specified when you signed up.
+
+# To get user sds information
+
+Add following permission in Windows azure active directory and make app multi-tenant.
+Access the directory as the signed-in user
+Read directory data
+Sign in and read user profile.
+
+Change the constant TENANT in samples\sdsapi.php file
+
+Construct the token class using \microsoft\aadphp\AAD\token using $client, $httpclient described above.
+```
+$token = new \microsoft\aadphp\AAD\token($access_token, $expires_on, $refresh_token, $scope, $resource, $client, $httpclient);
+```
+
+Construct sds api class using $token, $httpclient and $db instances.
+```
+$sds = new \microsoft\aadphp\samples\sdsapi($token, $httpclient, $db, $userId);
+```
+Now you can access sdsapi using $sds object.

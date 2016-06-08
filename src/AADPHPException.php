@@ -25,12 +25,13 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp;
+namespace microsoft\aadphp;
 
 /**
  * Extension to exception class allowing for debug data.
  */
-class ADALPHPException extends \Exception {
+class AADPHPException extends \Exception
+{
     /** @var mixed Any data useful for debugging. */
     protected $debugdata;
 
@@ -40,7 +41,8 @@ class ADALPHPException extends \Exception {
      * @param string $message Exception message.
      * @param mixed $debugdata Any data useful for debugging.
      */
-    public function __construct($message, $debugdata = '') {
+    public function __construct($message, $debugdata = '')
+    {
         $this->debugdata = $debugdata;
         parent::__construct($message);
     }
@@ -50,7 +52,8 @@ class ADALPHPException extends \Exception {
      *
      * @return mixed Set debug data.
      */
-    public function getDebugData() {
+    public function getDebugData()
+    {
         return $this->debugdata;
     }
 }

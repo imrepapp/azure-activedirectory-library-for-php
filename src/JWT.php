@@ -25,14 +25,15 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp;
+namespace microsoft\aadphp;
 
-use microsoft\adalphp\ADALPHPException;
+use microsoft\aadphp\AADPHPException;
 
 /**
  * Class for working with JWTs.
  */
-class JWT {
+class JWT
+{
 
     /** @var array Array of JWT header parameters. */
     protected $header = [];
@@ -55,7 +56,8 @@ class JWT {
      *
      * @param string $encoded An encoded JWT.
      */
-    public function __construct($encoded = '') {
+    public function __construct($encoded = '')
+    {
         if (!empty($encoded)) {
             list($header, $body) = $this->decode($encoded);
             $this->set_header($header);
@@ -68,7 +70,8 @@ class JWT {
      *
      * @param array $lang Array of language strings, in same form as static property $lang.
      */
-    public static function set_lang(array $lang) {
+    public static function set_lang(array $lang)
+    {
         foreach ($lang as $k => $v) {
             if (isset(static::$lang[$k])) {
                 static::$lang[$k] = $v;
@@ -83,28 +86,29 @@ class JWT {
      * @param array $keys Array of keys to verify JWT. At least one key must verify.
      * @return array Array of arrays of header and body parameters.
      */
-    protected static function decode($encoded, array $keys = array()) {
+    protected static function decode($encoded, array $keys = array())
+    {
         if (empty($encoded) || !is_string($encoded)) {
-            throw new ADALPHPException(static::$lang['errorjwtempty']);
+            throw new AADPHPException(static::$lang['errorjwtempty']);
         }
         $jwtparts = explode('.', $encoded);
         if (count($jwtparts) !== 3) {
-            throw new ADALPHPException(static::$lang['errorjwtmalformed']);
+            throw new AADPHPException(static::$lang['errorjwtmalformed']);
         }
 
         $header = static::decode_part($jwtparts[0]);
         if (empty($header)) {
-            throw new ADALPHPException(static::$lang['errorjwtcouldnotreadheader']);
+            throw new AADPHPException(static::$lang['errorjwtcouldnotreadheader']);
         }
         if (!isset($header['alg'])) {
-            throw new ADALPHPException(static::$lang['errorjwtinvalidheader']);
+            throw new AADPHPException(static::$lang['errorjwtinvalidheader']);
         }
 
-        static::verify($jwtparts[0].'.'.$jwtparts[1], $jwtparts[2], $keys, $header['alg']);
+        static::verify($jwtparts[0] . '.' . $jwtparts[1], $jwtparts[2], $keys, $header['alg']);
 
         $body = static::decode_part($jwtparts[1]);
         if (empty($body)) {
-            throw new ADALPHPException(static::$lang['errorjwtbadpayload']);
+            throw new AADPHPException(static::$lang['errorjwtbadpayload']);
         }
 
         return [$header, $body];
@@ -113,29 +117,30 @@ class JWT {
     /**
      * Verify the JWT.
      *
-     * @throws ADALPHPException If verification fails.
+     * @throws AADPHPException If verification fails.
      * @param string $payload Encoded JWT payload.
      * @param string $signature Encoded signature.
      * @param string $keys Public signing keys.
      * @param string $alg Verification algorithm.
      * @return bool True if successful.
      */
-    protected static function verify($payload, $signature, $keys, $alg) {
+    protected static function verify($payload, $signature, $keys, $alg)
+    {
         $signature = static::urlsafebase64decode($signature);
         if (!empty($keys) && trim($signature) === '') {
-            throw new ADALPHPException('Required JWT signature not received.');
+            throw new AADPHPException('Required JWT signature not received.');
         }
 
         switch ($alg) {
             case 'none':
                 if (!empty($keys)) {
-                    throw new ADALPHPException('Unsigned JWT received when key was provided.');
+                    throw new AADPHPException('Unsigned JWT received when key was provided.');
                 }
                 return true;
 
             case 'RS256':
                 if (empty($keys)) {
-                    throw new ADALPHPException('Key required for signed JWT.');
+                    throw new AADPHPException('Key required for signed JWT.');
                 }
                 $verified = false;
                 foreach ($keys as $key) {
@@ -145,12 +150,12 @@ class JWT {
                     }
                 }
                 if ($verified === false) {
-                    throw new ADALPHPException('JWT signature not verified.');
+                    throw new AADPHPException('JWT signature not verified.');
                 }
                 return true;
 
             default:
-                throw new ADALPHPException(static::$lang['errorjwtunsupportedalg'], $alg);
+                throw new AADPHPException(static::$lang['errorjwtunsupportedalg'], $alg);
         }
     }
 
@@ -160,7 +165,8 @@ class JWT {
      * @param string $input Input text.
      * @return string Output text.
      */
-    public static function urlsafebase64decode($input) {
+    public static function urlsafebase64decode($input)
+    {
         $output = strtr($input, '-_', '+/');
         $output = base64_decode($output);
         return $output;
@@ -172,7 +178,8 @@ class JWT {
      * @param string $part An encoded JWT part.
      * @return array|null Decoded part, or null if invalid.
      */
-    public static function decode_part($part) {
+    public static function decode_part($part)
+    {
         $decoded = static::urlsafebase64decode($part);
         if (!empty($decoded)) {
             $decoded = @json_decode($decoded, true);
@@ -184,9 +191,10 @@ class JWT {
      * Create an instance of the class from an encoded JWT string.
      *
      * @param string $encoded The encoded JWT.
-     * @return \microsoft\adalphp\JWT A JWT instance.
+     * @return \microsoft\aadphp\JWT A JWT instance.
      */
-    public static function instance_from_encoded($encoded) {
+    public static function instance_from_encoded($encoded)
+    {
         list($header, $body) = static::decode($encoded);
         $jwt = new static;
         $jwt->set_header($header);
@@ -199,7 +207,8 @@ class JWT {
      *
      * @param array $params The header params to set. Note, this will overwrite the existing header completely.
      */
-    public function set_header(array $params) {
+    public function set_header(array $params)
+    {
         $this->header = $params;
     }
 
@@ -209,7 +218,8 @@ class JWT {
      * @param array $params An array of claims to set. This will be appended to existing claims. Claims with the same keys will be
      *                      overwritten.
      */
-    public function set_claims(array $params) {
+    public function set_claims(array $params)
+    {
         $this->claims = array_merge($this->claims, $params);
     }
 
@@ -219,7 +229,8 @@ class JWT {
      * @param string $claim The name of the claim to get.
      * @return mixed The value of the claim.
      */
-    public function claim($claim) {
+    public function claim($claim)
+    {
         return (isset($this->claims[$claim])) ? $this->claims[$claim] : null;
     }
 }

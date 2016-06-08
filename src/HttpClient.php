@@ -25,23 +25,25 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp;
+namespace microsoft\aadphp;
 
-use microsoft\adalphp\ADALPHPException;
+use microsoft\aadphp\AADPHPException;
 
 /**
  * Basic HttpClient implementation with curl.
  */
-class HttpClient implements \microsoft\adalphp\HttpClientInterface {
+class HttpClient implements \microsoft\aadphp\HttpClientInterface
+{
     /**
      * POST request.
      *
      * @param string $url The URL to request.
      * @param array|string $data The data to send.
-     * @param array $options Additional curl options.
+     * @param array $options Additional curl options, header array can be provided through options[headers].
      * @return string Returned text.
      */
-    public function post($url, $data = '', $options = array()) {
+    public function post($url, $data = '', $options = array())
+    {
         return $this->request('post', $url, $data, $options);
     }
 
@@ -50,10 +52,11 @@ class HttpClient implements \microsoft\adalphp\HttpClientInterface {
      *
      * @param string $url The URL to request.
      * @param array|string $data The data to send.
-     * @param array $options Additional curl options.
+     * @param array $options Additional curl options, header array can be provided through options[headers].
      * @return string Returned text.
      */
-    public function get($url, $data = '', $options = array()) {
+    public function get($url, $data = '', $options = array())
+    {
         return $this->request('get', $url, $data, $options);
     }
 
@@ -63,10 +66,11 @@ class HttpClient implements \microsoft\adalphp\HttpClientInterface {
      * @param string $method The HTTP method to use.
      * @param string $url The URL to request.
      * @param array|string $data The data to send.
-     * @param array $options Additional curl options.
+     * @param array $options Additional curl options, header array can be provided through options[headers].
      * @return string Returned text.
      */
-    public function request($method, $url, $data, $options) {
+    public function request($method, $url, $data, $options)
+    {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             throw new \Exception('Invalid URL in HttpClient');
         }
@@ -93,16 +97,22 @@ class HttpClient implements \microsoft\adalphp\HttpClientInterface {
                 $curlopts[CURLOPT_HTTPGET] = true;
                 if (!empty($data)) {
                     $curlopts[CURLOPT_URL] = (strpos($url, '?') === false)
-                        ? $url.'?'.http_build_query($data)
-                        : $url.'&'.http_build_query($data);
+                        ? $url . '?' . http_build_query($data)
+                        : $url . '&' . http_build_query($data);
                 }
                 break;
 
             default:
-                throw new ADALPHPException('Unsupported request method.');
+                throw new AADPHPException('Unsupported request method.');
         }
 
         curl_setopt_array($ch, $curlopts);
+
+        if (!empty($options)) {
+            if (!empty($options['headers'])) {
+                curl_setopt($ch, CURLOPT_HTTPHEADER,$options['headers']);
+            }
+        }
 
         $returned = curl_exec($ch);
 

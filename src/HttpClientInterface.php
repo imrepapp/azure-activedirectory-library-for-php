@@ -25,12 +25,13 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp;
+namespace microsoft\aadphp;
 
 /**
  * Interface defining an HTTP client.
  */
-interface HttpClientInterface {
+interface HttpClientInterface
+{
     /**
      * HTTP POST method
      *
@@ -39,5 +40,15 @@ interface HttpClientInterface {
      * @param array $options
      * @return bool
      */
-     public function post($url, $params = '', $options = array());
+    public function post($url, $params = '', $options = array());
+
+    /**
+     * HTTP GET method
+     *
+     * @param string $url
+     * @param array|string $params
+     * @param array $options
+     * @return bool
+     */
+    public function get($url, $params = '', $options = array());
 }

@@ -27,7 +27,7 @@
 session_start();
 require(__DIR__ . '/../../vendor/autoload.php');
 
-$db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
+$db = \microsoft\aadphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
 // Create required tables for first run.
 $db->create_tables();
@@ -43,7 +43,6 @@ if (isset($_POST['email'])) {
     if ($email == '' || $firstname == '' || $lastname == '' || $password == '') {
         $error = 'Please enter all the fields.';
     } else {
-
         $exist = $db->is_user_exist($_POST['email']);
 
         if (!$exist) {
@@ -68,7 +67,7 @@ if (isset($_POST['email'])) {
 ?>
 
 <html>
-    <?php include(__DIR__ .'./header.php'); ?>
+    <?php include(__DIR__ . './header.php'); ?>
 
     <!-- Intro Header -->
     <header class="intro">
@@ -80,21 +79,17 @@ if (isset($_POST['email'])) {
                             <h4><?php echo $error ?></h4>
                         </div>
                     </div>
-                    <?php
-                }
-                if (isset($_GET['new_acc'])) {
-                    ?>
+                <?php }
+                if (isset($_GET['new_acc'])) { ?>
                     <div style="position: absolute; margin-left: auto; margin-right: auto; margin-top: 100px;width: 98%;">
                         <div class="alert alert-info" role="alert" style="position: relative;  ">
                             <h4>This account does not exist. Please sign up to create the account.</h4>
                         </div>
                     </div>
-                <?php }
-                ?>
-                
+                <?php } ?>
+
                 <div class="row">
                     <div class="col-md-4 brand-title" style="margin-top: 200px;">
-
                         <h1 class="brand-heading"><i class="fa fa-check-square-o"></i> AADS</h1>
                         <h2>(PHP Sample App)</h2>
                         <p class="intro-text">This sample app demonstrates authentication and REST API usage with Microsoft Azure AD using PHP.</p>

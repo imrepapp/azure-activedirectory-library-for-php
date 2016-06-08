@@ -25,18 +25,20 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\tests;
+namespace microsoft\aadphp\tests;
 
 /**
  * @codeCoverageIgnore
  */
-class MockStorage implements \microsoft\adalphp\OIDC\StorageInterface {
+class MockStorage implements \microsoft\aadphp\OIDC\StorageInterface
+{
     /**
      * Constructor.
      *
      * @param string $sqlitedb The path to the sqlite database file.
      */
-    public function __construct($sqlitedb = '') {
+    public function __construct($sqlitedb = '')
+    {
         $this->db = new \PDO('sqlite::memory:');
         $tablecreatesql = 'CREATE TABLE `state` (
             `id` INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +57,8 @@ class MockStorage implements \microsoft\adalphp\OIDC\StorageInterface {
      * @param array $stateparams Additional data to be stored with the state.
      * @return bool Success/Failure
      */
-    public function store_state($state, $nonce, $stateparams) {
+    public function store_state($state, $nonce, $stateparams)
+    {
         $sql = 'INSERT INTO state(state, nonce, additional) values (:state, :nonce, :additional)';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':state', $state, \PDO::PARAM_STR);
@@ -73,7 +76,8 @@ class MockStorage implements \microsoft\adalphp\OIDC\StorageInterface {
     }
 
 
-    public function get_state($state) {
+    public function get_state($state)
+    {
         $sql = 'SELECT * FROM state WHERE state = :state';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':state', $state, \PDO::PARAM_STR);
@@ -90,7 +94,8 @@ class MockStorage implements \microsoft\adalphp\OIDC\StorageInterface {
         ];
     }
 
-    public function delete_state($nonce) {
+    public function delete_state($nonce)
+    {
         $sql = 'DELETE FROM state WHERE nonce = :nonce';
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nonce', $nonce, \PDO::PARAM_STR);

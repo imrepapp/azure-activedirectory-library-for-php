@@ -25,12 +25,13 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC;
+namespace microsoft\aadphp\OIDC;
 
 /**
  * Interface defining an IDToken.
  */
-interface IDTokenInterface {
+interface IDTokenInterface
+{
     /**
      * Get a sensible username for the user represented by the idtoken.
      *
@@ -64,7 +65,7 @@ interface IDTokenInterface {
      *
      * @return int The expiration time.
      */
-    public function get_expiration() ;
+    public function get_expiration();
 
     /**
      * Get an array of available user information.
@@ -77,7 +78,7 @@ interface IDTokenInterface {
      * Construct an IDToken object from an encoded string.
      *
      * @param string $encoded An encoded idtoken.
-     * @return \microsoft\adalphp\OIDC\IDTokenInterface A constructed IDToken object.
+     * @return \microsoft\aadphp\OIDC\IDTokenInterface A constructed IDToken object.
      */
     public static function instance_from_encoded($encoded);
 }

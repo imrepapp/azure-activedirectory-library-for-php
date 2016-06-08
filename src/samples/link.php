@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (c) 2016 Micorosft Corporation
  *
@@ -29,9 +28,9 @@
 session_start();
 require(__DIR__ . '/../../vendor/autoload.php');
 
-$db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
+$db = \microsoft\aadphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 if (isset($_GET['link_check']) && isset($_SESSION['data'])) {
-    $data = json_decode($_SESSION['data'],TRUE);
+    $data = json_decode($_SESSION['data'], TRUE);
     $db->insert_ad_user($data['addata'], $data['userid'], $data['emailid'], $data['tokentype']);
     $_SESSION['user_id'] = $data['userid'];
     unset($_SESSION['data']);
@@ -42,17 +41,17 @@ if (isset($_GET['link_check']) && isset($_SESSION['data'])) {
 
 <html>
     <style type="text/css">
-        body{
+        body {
             padding-top: 100px;
             color: rgb(88, 88, 88) !important;
             background-color: rgb(240, 240, 240) !important;
         }
-        .navbar-fixed-top{
+        .navbar-fixed-top {
             border-bottom: 1px solid rgba(255,255,255,.3);
             background: #000 !important;
         }
     </style>
-    <?php include(__DIR__ .'./header.php'); ?>
+    <?php include(__DIR__ . './header.php'); ?>
 
     <div class="container">
         <div class="starter-template">

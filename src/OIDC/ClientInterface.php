@@ -25,23 +25,24 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC;
+namespace microsoft\aadphp\OIDC;
 
-use \microsoft\adalphp\HttpClientInterface;
-use \microsoft\adalphp\ADALPHPException;
+use \microsoft\aadphp\HttpClientInterface;
+use \microsoft\aadphp\AADPHPException;
 
 /**
  * OpenID Connect Client Interface.
  */
-interface ClientInterface {
+interface ClientInterface
+{
     /**
      * Constructor.
      *
-     * @param \microsoft\adalphp\HttpClientInterface $httpclient An HTTP client to use for background communication.
-     * @param \microsoft\adalphp\OIDC\StorageInterface $storage A storage implementation to use.
+     * @param \microsoft\aadphp\HttpClientInterface $httpclient An HTTP client to use for background communication.
+     * @param \microsoft\aadphp\OIDC\StorageInterface $storage A storage implementation to use.
      */
     public function __construct(HttpClientInterface $httpclient, StorageInterface $storage);
-    
+
     /**
      * Set auth endpoint.
      *
@@ -155,7 +156,7 @@ interface ClientInterface {
      *
      * @param string $idtoken Encoded id token.
      * @param string $expectednonce Expected nonce to validate received nonce against.
-     * @return \microsoft\adalphp\OIDC\IDTokenInterface An IDToken object.
+     * @return \microsoft\aadphp\OIDC\IDTokenInterface An IDToken object.
      */
     public function process_idtoken($idtoken, $expectednonce = '');
 

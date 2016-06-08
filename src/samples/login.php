@@ -25,37 +25,37 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-require(__DIR__.'/../../vendor/autoload.php');
+require(__DIR__ . '/../../vendor/autoload.php');
 
 // Construct.
-$httpclient = new \microsoft\adalphp\HttpClient;
-$storage = new \microsoft\adalphp\OIDC\StorageProviders\SQLite(__DIR__.'/storagedb.sqlite');
-$client = new \microsoft\adalphp\AAD\Client($httpclient, $storage);
+$httpclient = new \microsoft\aadphp\HttpClient;
+$storage = new \microsoft\aadphp\OIDC\StorageProviders\SQLite(__DIR__ . '/storagedb.sqlite');
+$client = new \microsoft\aadphp\AAD\Client($httpclient, $storage);
 
 if (!empty($_GET['type']) && $_GET['type'] === 'Hybrid') {
     $client->set_authflow('hybrid');
 }
 
 // Set credentials.
-require(__DIR__.'/config.php');
+require(__DIR__ . '/config.php');
 if (!defined('AADSPHP_CLIENTID') || empty(AADSPHP_CLIENTID)) {
-	throw new \Exception('No client ID set - please set in config.php');
+    throw new \Exception('No client ID set - please set in config.php');
 }
 $client->set_clientid(AADSPHP_CLIENTID);
 
 if (!defined('AADSPHP_CLIENTSECRET') || empty(AADSPHP_CLIENTSECRET)) {
-	throw new \Exception('No client secret set - please set in config.php');
+    throw new \Exception('No client secret set - please set in config.php');
 }
 $client->set_clientsecret(AADSPHP_CLIENTSECRET);
 
 if (!defined('AADSPHP_CLIENTREDIRECTURI') || empty(AADSPHP_CLIENTREDIRECTURI)) {
-	throw new \Exception('No redirect URI set - please set in config.php');
+    throw new \Exception('No redirect URI set - please set in config.php');
 }
 $client->set_redirecturi(AADSPHP_CLIENTREDIRECTURI);
 
 // Make request.
 if (!empty($_GET['prompt']) && $_GET['prompt'] === '1') {
-	$client->authrequest(true);
+    $client->authrequest(true);
 } else {
-	$client->authrequest();
+    $client->authrequest();
 }

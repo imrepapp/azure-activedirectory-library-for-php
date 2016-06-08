@@ -25,19 +25,21 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\tests;
+namespace microsoft\aadphp\tests;
 
 /**
  * @codeCoverageIgnore
  */
-class MockJWT extends \microsoft\adalphp\JWT {
+class MockJWT extends \microsoft\aadphp\JWT
+{
     /**
      * Decode an encoded JWT.
      *
      * @param string $encoded Encoded JWT.
      * @return array Array of arrays of header and body parameters.
      */
-    public static function decode($encoded) {
+    public static function decode($encoded)
+    {
         return parent::decode($encoded);
     }
 }
@@ -45,68 +47,92 @@ class MockJWT extends \microsoft\adalphp\JWT {
 /**
  * Tests JWT
  *
- * @group adalphp
+ * @group aadphp
  * @codeCoverageIgnore
  */
-class JWTTest extends \PHPUnit_Framework_TestCase {
+class JWTTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * Dataprovider for test_decode.
      *
      * @return array Array of arrays of test parameters.
      */
-    public function dataprovider_decode() {
+    public function dataprovider_decode()
+    {
         $tests = [];
 
         $tests['emptytest'] = [
-            '', '', ['Exception', 'Empty or non-string JWT received.']
+            '',
+            '',
+            ['Exception', 'Empty or non-string JWT received.']
         ];
 
         $tests['nonstringtest'] = [
-            100, '', ['Exception', 'Empty or non-string JWT received.']
+            100,
+            '',
+            ['Exception', 'Empty or non-string JWT received.']
         ];
 
         $tests['malformed1'] = [
-            'a', '', ['Exception', 'Malformed JWT received.']
+            'a',
+            '',
+            ['Exception', 'Malformed JWT received.']
         ];
 
         $tests['malformed2'] = [
-            'a.b', '', ['Exception', 'Malformed JWT received.']
+            'a.b',
+            '',
+            ['Exception', 'Malformed JWT received.']
         ];
 
         $tests['malformed3'] = [
-            'a.b.c.d', '', ['Exception', 'Malformed JWT received.']
+            'a.b.c.d',
+            '',
+            ['Exception', 'Malformed JWT received.']
         ];
 
         $tests['badheader1'] = [
-            'h.p.', '', ['Exception', 'Could not read JWT header']
+            'h.p.',
+            '',
+            ['Exception', 'Could not read JWT header']
         ];
 
         $header = base64_encode(json_encode(['key' => 'val']));
         $tests['invalidheader1'] = [
-            $header.'.p.s', '', ['Exception', 'Invalid JWT header']
+            $header . '.p.s',
+            '',
+            ['Exception', 'Invalid JWT header']
         ];
 
         $header = base64_encode(json_encode(['alg' => 'ROT13']));
         $tests['badalg1'] = [
-            $header.'.p.s', '', ['Exception', 'JWS Alg or JWE not supported']
+            $header . '.p.s',
+            '',
+            ['Exception', 'JWS Alg or JWE not supported']
         ];
 
         $header = base64_encode(json_encode(['alg' => 'RS256']));
         $payload = base64_encode(json_encode(['payload' => 'found']));
         $tests['keyrequired'] = [
-            $header.'.'.$payload.'.s', '', ['Exception', 'Key required for signed JWT.']
+            $header . '.' . $payload . '.s',
+            '',
+            ['Exception', 'Key required for signed JWT.']
         ];
 
         $header = base64_encode(json_encode(['alg' => 'none']));
         $payload = 'p';
         $tests['badpayload1'] = [
-            $header.'.'.$payload.'.', '', ['Exception', 'Could not read JWT payload.']
+            $header . '.' . $payload . '.',
+            '',
+            ['Exception', 'Could not read JWT payload.']
         ];
 
         $header = base64_encode(json_encode(['alg' => 'none']));
         $payload = base64_encode('nothing');
         $tests['badpayload2'] = [
-            $header.'.'.$payload.'.', '', ['Exception', 'Could not read JWT payload.']
+            $header . '.' . $payload . '.',
+            '',
+            ['Exception', 'Could not read JWT payload.']
         ];
 
         $header = ['alg' => 'none'];
@@ -115,7 +141,9 @@ class JWTTest extends \PHPUnit_Framework_TestCase {
         $payloadenc = base64_encode(json_encode($payload));
         $expected = [$header, $payload];
         $tests['goodpayload1'] = [
-            $headerenc.'.'.$payloadenc.'.s', $expected, []
+            $headerenc . '.' . $payloadenc . '.s',
+            $expected,
+            []
         ];
 
         return $tests;
@@ -126,11 +154,12 @@ class JWTTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider dataprovider_decode
      */
-    public function test_decode($encodedjwt, $expectedresult, $expectedexception) {
+    public function test_decode($encodedjwt, $expectedresult, $expectedexception)
+    {
         if (!empty($expectedexception)) {
             $this->setExpectedException($expectedexception[0], $expectedexception[1]);
         }
-        $actualresult = \microsoft\adalphp\tests\MockJWT::decode($encodedjwt);
+        $actualresult = \microsoft\aadphp\tests\MockJWT::decode($encodedjwt);
         $this->assertEquals($expectedresult, $actualresult);
     }
 }

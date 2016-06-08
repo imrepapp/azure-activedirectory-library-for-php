@@ -25,12 +25,13 @@
  * @copyright (C) 2016 onwards Microsoft Corporation (http://microsoft.com/)
  */
 
-namespace microsoft\adalphp\OIDC;
+namespace microsoft\aadphp\OIDC;
 
 /**
  * Interface defining storage for OIDC.
  */
-interface StorageInterface {
+interface StorageInterface
+{
     /**
      * Store the state and corresponding nonce for an OIDC request.
      *

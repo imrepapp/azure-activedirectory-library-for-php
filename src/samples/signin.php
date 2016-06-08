@@ -32,8 +32,7 @@ if (isset($_SESSION['user_id'])) {
 
 require(__DIR__ . '/../../vendor/autoload.php');
 
-$db = \microsoft\adalphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
-
+$db = \microsoft\aadphp\samples\sqlite::get_db(__DIR__ . '/storagedb.sqlite');
 
 $error = '';
 if (isset($_GET['local'])) {
