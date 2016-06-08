@@ -1,13 +1,10 @@
-# Microsoft Azure Active Directory Authentication Library (AAD) for PHP
-The AAD SDK for PHP gives your application the full functionality of Microsoft Azure AD, including industry standard protocol support for OAuth2, Web API integration with user level consent, and two factor authentication support.
-
-## NOTE
-This is an early, pre-release version of the library.
+# O365-EDU-PHP-Samples
+This sample contains a PHP libary for accessing Azure Active Directory and a sample app that demonstrates the functionality of that library as well as the new Microsoft School Data Sync API.
 
 ## Installation
 To install this library:
 ```
-git clone git@github.com:AzureAD/azure-activedirectory-for-php.git
+git clone git@github.com:OfficeDev/O365-EDU-PHP-Samples.git
 ```
 
 This library is mostly self-contained, however it uses PSR-4 for autoloading, and PHPUnit for unit testing. You can use Composer to install PHPUnit and generate a PSR-4 autoloader.
@@ -114,9 +111,3 @@ The `samples` folder contains a sample implementation of the library demonstrati
 We leverage [Stack Overflow](http://stackoverflow.com/) to work with the community on supporting Azure Active Directory and its SDKs, including this one! We highly recommend you ask your questions on Stack Overflow (we're all on there!) Also browse existing issues to see if someone has had your question before.
 
 We recommend you use the "adal" tag so we can see it! Here is the latest Q&A on Stack Overflow for AAD: [http://stackoverflow.com/questions/tagged/adal](http://stackoverflow.com/questions/tagged/adal)
-
-## Contributing
-All code is licensed under the MIT license and we triage actively on GitHub. We enthusiastically welcome contributions and feedback. You can fork the repo and start contributing now. [More details](https://github.com/AzureAD/azure-activedirectory-library-for-php/blob/master/contributing.md) about contributing.
-
-## License
-Copyright (c) Microsoft Corporation. Licensed under the MIT License.
