@@ -42,7 +42,7 @@ class HttpClient implements \microsoft\aadphp\HttpClientInterface
    *
    * @param array $options The curl options array
    */
-  public function HttpClient($options = array())
+  public function __construct($options = array())
   {
     $this->defaultOptions = $options;
   }
@@ -119,17 +119,17 @@ class HttpClient implements \microsoft\aadphp\HttpClientInterface
         throw new AADPHPException('Unsupported request method.');
     }
 
-    curl_setopt_array($ch, $curlopts);
-
     $options = array_merge($this->defaultOptions, $options);
     if (!empty($options)) {
-      if (!empty($options['headers'])) {
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $options['headers']);
+      if (array_key_exists('headers', $options)) {
+        $curlopts[CURLOPT_HTTPHEADER] = $options['headers'];
       }
-      if (!empty($options['ssl_verifypeer'])) {
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $options['ssl_verifypeer']);
+      if (array_key_exists('ssl_verifypeer', $options)) {
+        $curlopts[CURLOPT_SSL_VERIFYPEER] = false;
       }
     }
+
+    curl_setopt_array($ch, $curlopts);
 
     $returned = curl_exec($ch);
 
