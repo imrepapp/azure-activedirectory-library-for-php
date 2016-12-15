@@ -85,8 +85,7 @@ class Client extends \microsoft\aadphp\OIDC\Client
      */
     protected function constructidtoken($idtoken)
     {
-        $httpclient = new \microsoft\aadphp\HttpClient;
-        $keys = IDToken::get_keys($httpclient);
+        $keys = IDToken::get_keys($this->httpclient);
         return \microsoft\aadphp\AAD\IDToken::instance_from_encoded($idtoken, $keys);
     }
 }
