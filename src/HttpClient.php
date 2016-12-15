@@ -27,96 +27,113 @@
 
 namespace microsoft\aadphp;
 
-use microsoft\aadphp\AADPHPException;
-
 /**
  * Basic HttpClient implementation with curl.
  */
 class HttpClient implements \microsoft\aadphp\HttpClientInterface
 {
-    /**
-     * POST request.
-     *
-     * @param string $url The URL to request.
-     * @param array|string $data The data to send.
-     * @param array $options Additional curl options, header array can be provided through options[headers].
-     * @return string Returned text.
-     */
-    public function post($url, $data = '', $options = array())
-    {
-        return $this->request('post', $url, $data, $options);
+  /**
+   * @var array $defaultOptions Default curl options array
+   */
+  protected $defaultOptions;
+
+  /**
+   * Constructor
+   *
+   * @param array $options The curl options array
+   */
+  public function HttpClient($options = array())
+  {
+    $this->defaultOptions = $options;
+  }
+
+  /**
+   * POST request.
+   *
+   * @param string $url The URL to request.
+   * @param array|string $data The data to send.
+   * @param array $options Additional curl options, header array can be provided through options[headers].
+   * @return string Returned text.
+   */
+  public function post($url, $data = '', $options = array())
+  {
+    return $this->request('post', $url, $data, $options);
+  }
+
+  /**
+   * GET request.
+   *
+   * @param string $url The URL to request.
+   * @param array|string $data The data to send.
+   * @param array $options Additional curl options, header array can be provided through options[headers].
+   * @return string Returned text.
+   */
+  public function get($url, $data = '', $options = array())
+  {
+    return $this->request('get', $url, $data, $options);
+  }
+
+  /**
+   * Make a curl request.
+   *
+   * @param string $method The HTTP method to use.
+   * @param string $url The URL to request.
+   * @param array|string $data The data to send.
+   * @param array $options Additional curl options, header array can be provided through options[headers].
+   * @return string Returned text.
+   */
+  public function request($method, $url, $data, $options)
+  {
+    if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+      throw new \Exception('Invalid URL in HttpClient');
     }
 
-    /**
-     * GET request.
-     *
-     * @param string $url The URL to request.
-     * @param array|string $data The data to send.
-     * @param array $options Additional curl options, header array can be provided through options[headers].
-     * @return string Returned text.
-     */
-    public function get($url, $data = '', $options = array())
-    {
-        return $this->request('get', $url, $data, $options);
+    $ch = curl_init();
+    $curlopts = [
+      CURLOPT_URL => $url,
+      CURLOPT_HEADER => false,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_CONNECTTIMEOUT => 3,
+      CURLOPT_TIMEOUT => 12,
+      CURLOPT_MAXREDIRS => 12,
+    ];
+
+    $method = strtolower($method);
+    switch ($method) {
+      case 'post':
+        $curlopts[CURLOPT_POST] = true;
+        $curlopts[CURLOPT_POSTFIELDS] = $data;
+        break;
+
+      case 'get':
+        $curlopts[CURLOPT_HTTPGET] = true;
+        if (!empty($data)) {
+          $curlopts[CURLOPT_URL] = (strpos($url, '?') === false)
+            ? $url . '?' . http_build_query($data)
+            : $url . '&' . http_build_query($data);
+        }
+        break;
+
+      default:
+        throw new AADPHPException('Unsupported request method.');
     }
 
-    /**
-     * Make a curl request.
-     *
-     * @param string $method The HTTP method to use.
-     * @param string $url The URL to request.
-     * @param array|string $data The data to send.
-     * @param array $options Additional curl options, header array can be provided through options[headers].
-     * @return string Returned text.
-     */
-    public function request($method, $url, $data, $options)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-            throw new \Exception('Invalid URL in HttpClient');
-        }
+    curl_setopt_array($ch, $curlopts);
 
-        $ch = curl_init();
-        $curlopts = [
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_CONNECTTIMEOUT => 3,
-            CURLOPT_TIMEOUT => 12,
-            CURLOPT_MAXREDIRS => 12,
-        ];
-
-        $method = strtolower($method);
-        switch ($method) {
-            case 'post':
-                $curlopts[CURLOPT_POST] = true;
-                $curlopts[CURLOPT_POSTFIELDS] = $data;
-                break;
-
-            case 'get':
-                $curlopts[CURLOPT_HTTPGET] = true;
-                if (!empty($data)) {
-                    $curlopts[CURLOPT_URL] = (strpos($url, '?') === false)
-                        ? $url . '?' . http_build_query($data)
-                        : $url . '&' . http_build_query($data);
-                }
-                break;
-
-            default:
-                throw new AADPHPException('Unsupported request method.');
-        }
-
-        curl_setopt_array($ch, $curlopts);
-
-        if (!empty($options)) {
-            if (!empty($options['headers'])) {
-                curl_setopt($ch, CURLOPT_HTTPHEADER,$options['headers']);
-            }
-        }
-
-        $returned = curl_exec($ch);
-
-        curl_close($ch);
-        return $returned;
+    $options = array_merge($this->defaultOptions, $options);
+    if (!empty($options)) {
+      if (!empty($options['headers'])) {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $options['headers']);
+      }
+      if (!empty($options['ssl_verifypeer'])) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $options['ssl_verifypeer']);
+      }
     }
+
+    $returned = curl_exec($ch);
+
+    curl_close($ch);
+    return $returned;
+  }
 }
